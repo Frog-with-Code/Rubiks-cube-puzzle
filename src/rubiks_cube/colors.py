@@ -8,5 +8,6 @@ class FaceColors(Enum):
     YELLOW = "48;5;226"
     WHITE = "48;5;15"
     
-    def print_square(self):
-        print(f"\033[{self.value}m{"  "}\033[0m", end="")
+    def draw_square(self):
+        print(f"\033[{self.value}m{'   '}\033[0m", end=" ")
+        pass
