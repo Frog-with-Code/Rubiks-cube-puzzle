@@ -1,5 +1,6 @@
 from face import Face
 from colors import FaceColors
+import os
 
 
 class Cube:
@@ -20,6 +21,10 @@ class Cube:
     @staticmethod
     def __convert_clockwise_key(clockwise_key):
         return clockwise_key == "y"
+
+    @staticmethod
+    def __clear_terminal():
+        os.system("cls" if os.name == "nt" else "clear")
 
     def __init__(self):
         # * the name of the face depends on the color of its center
@@ -61,6 +66,8 @@ class Cube:
         )
 
     def display_all_faces(self):
+        Cube.__clear_terminal()
+
         row_len = col_len = Face.edge_len
 
         for i in range(row_len):
@@ -71,10 +78,17 @@ class Cube:
 
                 print("   ", end="")
             print("\n")
-        print("\n")
 
-    def __rotate_edge_surface(self, edge_surface, clockwise=True):
-        if clockwise:
+    def __rotate_edge_surface(self, edge_surface, rotated_face, clockwise):
+        # * rotation of orange, blue, yellow faces is inverted
+        # * because of order extracting edges
+        equator_clockwise = (
+            not clockwise
+            if rotated_face in (self.__orange_face, self.__blue_face, self.__yellow_face)
+            else clockwise
+        )
+
+        if equator_clockwise:
             return edge_surface[-1:] + edge_surface[:-1]
         else:
             return edge_surface[1:] + edge_surface[:1]
@@ -150,9 +164,11 @@ class Cube:
         else:
             self.__set_white_yellow_equator(edge_surface, rotated_face)
 
-    def __rotate_neighbors(self, rotated_face, clockwise=True):
+    def __rotate_neighbors(self, rotated_face, clockwise):
         edge_surface = self.__get_edge_surface(rotated_face)
-        rotated_edge_surface = self.__rotate_edge_surface(edge_surface, clockwise)
+        rotated_edge_surface = self.__rotate_edge_surface(
+            edge_surface, rotated_face, clockwise
+        )
         self.__set_edge_surface(rotated_edge_surface, rotated_face)
 
     def rotate_face(self, keys):

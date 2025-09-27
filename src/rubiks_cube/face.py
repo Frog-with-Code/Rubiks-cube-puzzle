@@ -13,7 +13,7 @@ class Face:
         self.__up_face = up_face
         self.__down_face = down_face
 
-    def rotate(self, clockwise=True):
+    def rotate(self, clockwise):
         if clockwise:
             self.__matrix = [list(reversed(col)) for col in zip(*self.__matrix)]
         else:

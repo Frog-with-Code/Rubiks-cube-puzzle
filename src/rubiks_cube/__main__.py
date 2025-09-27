@@ -19,5 +19,4 @@ def main():
         cube1.rotate_face(keys)
 
 if __name__ == "__main__":
-    
     main()
