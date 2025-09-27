@@ -23,7 +23,7 @@ class Cube:
         return clockwise_key == "y"
 
     @staticmethod
-    def __clear_terminal():
+    def clear_terminal():
         os.system("cls" if os.name == "nt" else "clear")
 
     def __init__(self):
@@ -66,8 +66,6 @@ class Cube:
         )
 
     def display_all_faces(self):
-        Cube.__clear_terminal()
-
         row_len = col_len = Face.edge_len
 
         for i in range(row_len):

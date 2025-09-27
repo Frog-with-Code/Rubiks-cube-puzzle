@@ -16,7 +16,13 @@ def main():
         print("You wanna rotate clockwise? y - yes, n - no")
         clockwise_key = input("Enter option: ")
         keys = (main_face_key, rotated_face_key, clockwise_key)
-        cube1.rotate_face(keys)
+        Cube.clear_terminal()
+        
+        try:
+            cube1.rotate_face(keys)
+        except ValueError as error:
+            print(f"{error} \nTry again\n")
+            continue
 
 if __name__ == "__main__":
     main()
