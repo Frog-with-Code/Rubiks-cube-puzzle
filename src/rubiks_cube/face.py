@@ -45,3 +45,11 @@ class Face:
     
     def set_row(self, index, row):
         self.__matrix[index] = row[:]
+        
+    def is_uniform(self):
+        center_color = self.__matrix[1][1]
+        for row in self.__matrix:
+            for cell in row:
+                if cell != center_color:
+                    return False
+        return True

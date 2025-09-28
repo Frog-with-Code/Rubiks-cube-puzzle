@@ -42,7 +42,7 @@ class Cube:
 
         self.__faces = self.__create_face_map()
         self.__setup_face_connections()
-        self.__random_generation()
+        #self.__random_generation()
 
     def __create_face_map(self):
         return {
@@ -227,3 +227,9 @@ class Cube:
 
         rotated_face.rotate(clockwise)
         self.__rotate_neighbors(rotated_face, clockwise)
+        
+    def is_solved(self):
+        for face in self.__faces.values():
+            if not face.is_uniform():
+                return False
+        return True

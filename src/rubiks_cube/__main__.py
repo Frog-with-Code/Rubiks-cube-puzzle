@@ -4,9 +4,8 @@ from colors import FaceColors
 
 def main():
     cube1 = Cube()
-    flag = True
     Cube.clear_terminal()
-    while flag:
+    while True:
         cube1.display_all_faces()
         print(
             "Choose the main face. r - red, o - orange, g - green, b - blue, w - white, y - yellow"
@@ -24,6 +23,10 @@ def main():
         except ValueError as error:
             print(f"{error} \nTry again\n")
             continue
+        
+        if cube1.is_solved():
+            print("\nThe puzzle is solved!")
+            break
 
 if __name__ == "__main__":
     main()
