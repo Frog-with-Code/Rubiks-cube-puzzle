@@ -5,6 +5,7 @@ from colors import FaceColors
 def main():
     cube1 = Cube()
     flag = True
+    Cube.clear_terminal()
     while flag:
         cube1.display_all_faces()
         print(
@@ -16,7 +17,7 @@ def main():
         print("You wanna rotate clockwise? y - yes, n - no")
         clockwise_key = input("Enter option: ")
         keys = (main_face_key, rotated_face_key, clockwise_key)
-        Cube.clear_terminal()
+        #Cube.clear_terminal()
         
         try:
             cube1.rotate_face(keys)
