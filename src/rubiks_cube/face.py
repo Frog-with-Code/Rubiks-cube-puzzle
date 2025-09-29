@@ -4,9 +4,12 @@ from colors import FaceColors
 class Face:
     edge_len = 3
 
-    def __init__(self, color):
-        self.__matrix = [[color] * Face.edge_len for _ in range(Face.edge_len)]
-
+    def __init__(self, color_arg):
+        if isinstance(color_arg, list):
+            self.__matrix = color_arg[:]
+        else:
+            self.__matrix = [[color_arg] * Face.edge_len for _ in range(Face.edge_len)]
+        
     def set_dependency(self, left_face, right_face, up_face, down_face):
         self.__left_face = left_face
         self.__right_face = right_face

@@ -2,22 +2,59 @@ from face import Face
 from colors import FaceColors
 import os
 import random
+import json
+from pathlib import Path
 
 
 class Cube:
-    allowed_main_keys = ["r", "o", "g", "b", "w", "y"]
+    allowed_color_keys = ["r", "o", "g", "b", "w", "y"]
     allowed_rotation_keys = ["l", "u", "r", "d"]
     allowed_clockwise_keys = ["y", "n"]
+    data_dir = Path("src/rubiks_cube/")
 
     @classmethod
     def check_keys(cls, keys):
         main_face_key, rotated_face_key, clockwise_key = keys
-        if main_face_key not in cls.allowed_main_keys:
+        if main_face_key not in cls.allowed_color_keys:
             raise ValueError("Incorrect value of main face key")
         if rotated_face_key not in cls.allowed_rotation_keys:
             raise ValueError("Incorrect value of rotated face key")
         if clockwise_key not in cls.allowed_clockwise_keys:
             raise ValueError("Incorrect value of rotated face key")
+
+    @classmethod
+    def create_solved(cls):
+        return cls(
+            (
+                Face(FaceColors.RED),
+                Face(FaceColors.ORANGE),
+                Face(FaceColors.GREEN),
+                Face(FaceColors.BLUE),
+                Face(FaceColors.WHITE),
+                Face(FaceColors.YELLOW),
+            )
+        )
+
+    @classmethod
+    def create_from_file(cls, file_name, file_dir=None):
+        if file_dir is None:
+            file_dir = Cube.data_dir
+        full_path = file_dir / file_name
+
+        with open(full_path) as f:
+            key_matrixes = json.load(f)["faces"]
+            print(key_matrixes)
+
+        return cls(
+            (
+                Face(Cube.__convert_key_matrix(key_matrixes["red"])),
+                Face(Cube.__convert_key_matrix(key_matrixes["orange"])),
+                Face(Cube.__convert_key_matrix(key_matrixes["green"])),
+                Face(Cube.__convert_key_matrix(key_matrixes["blue"])),
+                Face(Cube.__convert_key_matrix(key_matrixes["white"])),
+                Face(Cube.__convert_key_matrix(key_matrixes["yellow"])),
+            )
+        )
 
     @staticmethod
     def __convert_clockwise_key(clockwise_key):
@@ -26,23 +63,40 @@ class Cube:
     @staticmethod
     def clear_terminal():
         os.system("cls" if os.name == "nt" else "clear")
-        
+
     @staticmethod
     def __orient_edge(edge, condition):
         return edge[::-1] if condition else edge
 
-    def __init__(self):
+    @staticmethod
+    def __is_json(file):
+        path = Path(file)
+        return path.suffix == ".json"
+
+    @staticmethod
+    def __convert_key_matrix(key_matrix):
+        color_map = {
+            "r": FaceColors.RED,
+            "o": FaceColors.ORANGE,
+            "g": FaceColors.GREEN,
+            "b": FaceColors.BLUE,
+            "w": FaceColors.WHITE,
+            "y": FaceColors.YELLOW,
+        }
+        return [[color_map[cell] for cell in row] for row in key_matrix]
+
+    def __init__(self, faces):
         # * the name of the face depends on the color of its center
-        self.__red_face = Face(FaceColors.RED)
-        self.__orange_face = Face(FaceColors.ORANGE)
-        self.__green_face = Face(FaceColors.GREEN)
-        self.__blue_face = Face(FaceColors.BLUE)
-        self.__white_face = Face(FaceColors.WHITE)
-        self.__yellow_face = Face(FaceColors.YELLOW)
+        red_face, orange_face, green_face, blue_face, white_face, yellow_face = faces
+        self.__red_face = red_face
+        self.__orange_face = orange_face
+        self.__green_face = green_face
+        self.__blue_face = blue_face
+        self.__white_face = white_face
+        self.__yellow_face = yellow_face
 
         self.__faces = self.__create_face_map()
         self.__setup_face_connections()
-        #self.__random_generation()
 
     def __create_face_map(self):
         return {
@@ -51,13 +105,11 @@ class Cube:
             "g": self.__green_face,
             "b": self.__blue_face,
             "y": self.__yellow_face,
-            "w": self.__white_face
+            "w": self.__white_face,
         }
-        
-    def __random_generation(self):
-        target_count = 35
+
+    def shuffle(self, target_count=35, max_count=100):
         actual_count = 0
-        max_count = 100
         face_keys = list(self.__faces.keys())
         last_move = ()
         while actual_count < target_count and actual_count < max_count:
@@ -161,16 +213,18 @@ class Cube:
     def __set_red_orange_equator(self, edge_surface, rotated_face, clockwise):
         i, j = (-1, 0) if rotated_face == self.__red_face else (0, -1)
         edge_for_green, edge_for_white, edge_for_blue, edge_for_yellow = edge_surface
-        
-        #* condition for orienting edge is defined by its position and direction of rotation
-        #* 2/4 edges are inverted
+
+        # * condition for orienting edge is defined by its position and direction of rotation
+        # * 2/4 edges are inverted
         is_red = rotated_face == self.__red_face
         orient_condition = is_red == clockwise
 
         final_edge_for_green = Cube.__orient_edge(edge_for_green, orient_condition)
         final_edge_for_blue = Cube.__orient_edge(edge_for_blue, orient_condition)
         final_edge_for_white = Cube.__orient_edge(edge_for_white, not orient_condition)
-        final_edge_for_yellow = Cube.__orient_edge(edge_for_yellow, not orient_condition)
+        final_edge_for_yellow = Cube.__orient_edge(
+            edge_for_yellow, not orient_condition
+        )
 
         self.__green_face.set_col(i, final_edge_for_green)
         self.__white_face.set_col(i, final_edge_for_white)
@@ -186,7 +240,9 @@ class Cube:
         final_edge_for_orange = Cube.__orient_edge(edge_for_orange, orient_condition)
         final_edge_for_red = Cube.__orient_edge(edge_for_red, orient_condition)
         final_edge_for_white = Cube.__orient_edge(edge_for_white, not orient_condition)
-        final_edge_for_yellow = Cube.__orient_edge(edge_for_yellow, not orient_condition)
+        final_edge_for_yellow = Cube.__orient_edge(
+            edge_for_yellow, not orient_condition
+        )
 
         self.__orange_face.set_col(i, final_edge_for_orange)
         self.__white_face.set_row(i, final_edge_for_white)
@@ -227,7 +283,7 @@ class Cube:
 
         rotated_face.rotate(clockwise)
         self.__rotate_neighbors(rotated_face, clockwise)
-        
+
     def is_solved(self):
         for face in self.__faces.values():
             if not face.is_uniform():

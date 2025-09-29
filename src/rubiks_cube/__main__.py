@@ -3,7 +3,9 @@ from colors import FaceColors
 
 
 def main():
-    cube1 = Cube()
+    # cube1 = Cube.create_solved()
+    # cube1.shuffle()
+    cube1 = Cube.create_from_file("input.json")
     Cube.clear_terminal()
     while True:
         cube1.display_all_faces()
