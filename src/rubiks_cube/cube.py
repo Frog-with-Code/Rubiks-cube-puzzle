@@ -21,6 +21,17 @@ class Cube:
             raise ValueError("Incorrect value of rotated face key")
         if clockwise_key not in cls.allowed_clockwise_keys:
             raise ValueError("Incorrect value of rotated face key")
+        
+    @classmethod
+    def validate_file_data(cls, faces):
+        cls.__validate_data_structure(faces)
+        cls.__validate_center_colors(faces)
+        cls.__validate_allowed_colors(faces)
+        
+    @classmethod
+    def validate_file_path(cls, file_path):
+        cls.__validate_file_exists(file_path)
+        cls.__validate_file_extension(file_path)
 
     @classmethod
     def create_solved(cls):
@@ -41,18 +52,19 @@ class Cube:
             file_dir = Cube.data_dir
         full_path = file_dir / file_name
 
+        cls.validate_file_path(full_path)
         with open(full_path) as f:
-            key_matrixes = json.load(f)["faces"]
-            print(key_matrixes)
+            faces = json.load(f)["faces"]
 
+        cls.validate_file_data(faces)
         return cls(
             (
-                Face(Cube.__convert_key_matrix(key_matrixes["red"])),
-                Face(Cube.__convert_key_matrix(key_matrixes["orange"])),
-                Face(Cube.__convert_key_matrix(key_matrixes["green"])),
-                Face(Cube.__convert_key_matrix(key_matrixes["blue"])),
-                Face(Cube.__convert_key_matrix(key_matrixes["white"])),
-                Face(Cube.__convert_key_matrix(key_matrixes["yellow"])),
+                Face(Cube.__convert_key_matrix(faces["red"])),
+                Face(Cube.__convert_key_matrix(faces["orange"])),
+                Face(Cube.__convert_key_matrix(faces["green"])),
+                Face(Cube.__convert_key_matrix(faces["blue"])),
+                Face(Cube.__convert_key_matrix(faces["white"])),
+                Face(Cube.__convert_key_matrix(faces["yellow"])),
             )
         )
 
@@ -69,9 +81,14 @@ class Cube:
         return edge[::-1] if condition else edge
 
     @staticmethod
-    def __is_json(file):
-        path = Path(file)
-        return path.suffix == ".json"
+    def __validate_file_extension(file_path):
+        if file_path.suffix != ".json":
+            raise ValueError("Only .json format is permitted!")
+
+    @staticmethod
+    def __validate_file_exists(file_path):
+        if not file_path.is_file():
+            raise FileNotFoundError(f"File not found: {file_path}")
 
     @staticmethod
     def __convert_key_matrix(key_matrix):
@@ -84,6 +101,39 @@ class Cube:
             "y": FaceColors.YELLOW,
         }
         return [[color_map[cell] for cell in row] for row in key_matrix]
+    
+    @staticmethod
+    def __validate_data_structure(faces):
+        if len(faces) != 6:
+            raise ValueError("Cube must contain 6 faces!")
+        for matrix in faces.values():
+            if len(matrix) != Face.edge_len:
+                raise ValueError("Incorrect row amount!")
+            for row in matrix:
+                if len(row) != Face.edge_len:
+                    raise ValueError("Incorrect column amount!")
+    
+    @staticmethod
+    def __validate_center_colors(faces):
+        key_color_map = {
+            'red': 'r',
+            'orange': 'o',
+            'green': 'g',
+            'blue': 'b',
+            'white': 'w',
+            'yellow': 'y'
+        }
+        for face_color in key_color_map.keys():
+            if faces[face_color][1][1] != key_color_map[face_color]:
+                raise ValueError("Center color must match the face color!")
+            
+    @staticmethod
+    def __validate_allowed_colors(faces):
+        for matrix in faces.values():
+            for row in matrix:
+                for cell in row:
+                    if cell not in Cube.allowed_color_keys:
+                        raise ValueError("Incorrect key value!")
 
     def __init__(self, faces):
         # * the name of the face depends on the color of its center
@@ -274,8 +324,9 @@ class Cube:
         self.__set_edge_surface(rotated_edge_surface, rotated_face, clockwise)
 
     def rotate_face(self, keys):
-        Cube.check_keys(keys)
-        main_face_key, rotated_face_key, clockwise_key = keys
+        formatted_keys = tuple(key.strip() for key in keys)
+        Cube.check_keys(formatted_keys)
+        main_face_key, rotated_face_key, clockwise_key = formatted_keys
 
         main_face = self.__faces[main_face_key]
         rotated_face = main_face.get_neighbor_by_key(rotated_face_key)
