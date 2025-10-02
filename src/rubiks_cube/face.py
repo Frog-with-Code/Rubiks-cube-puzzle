@@ -1,4 +1,4 @@
-from colors import FaceColors
+from .colors import FaceColors
 
 
 class Face:

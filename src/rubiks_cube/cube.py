@@ -1,5 +1,5 @@
-from face import Face
-from colors import FaceColors
+from .face import Face
+from .colors import FaceColors
 import os
 import random
 import json
@@ -16,22 +16,22 @@ class Cube:
     def check_keys(cls, keys):
         main_face_key, rotated_face_key, clockwise_key = keys
         if main_face_key not in cls.allowed_color_keys:
-            raise ValueError("Incorrect value of main face key")
+            raise ValueError("Incorrect value of main face key!")
         if rotated_face_key not in cls.allowed_rotation_keys:
-            raise ValueError("Incorrect value of rotated face key")
+            raise ValueError("Incorrect value of rotated face key!")
         if clockwise_key not in cls.allowed_clockwise_keys:
-            raise ValueError("Incorrect value of rotated face key")
+            raise ValueError("Incorrect value of rotated face key!")
         
-    @classmethod
-    def validate_file_data(cls, faces):
-        cls.__validate_data_structure(faces)
-        cls.__validate_center_colors(faces)
-        cls.__validate_allowed_colors(faces)
+    @staticmethod
+    def validate_file_data(faces):
+        Cube.validate_data_structure(faces)
+        Cube.validate_center_colors(faces)
+        Cube.validate_allowed_colors(faces)
         
-    @classmethod
-    def validate_file_path(cls, file_path):
-        cls.__validate_file_exists(file_path)
-        cls.__validate_file_extension(file_path)
+    @staticmethod
+    def validate_file_path(file_path):
+        Cube.validate_file_exists(file_path)
+        Cube.validate_file_extension(file_path)
 
     @classmethod
     def create_solved(cls):
@@ -52,24 +52,24 @@ class Cube:
             file_dir = Cube.data_dir
         full_path = file_dir / file_name
 
-        cls.validate_file_path(full_path)
+        Cube.validate_file_path(full_path)
         with open(full_path) as f:
             faces = json.load(f)["faces"]
 
-        cls.validate_file_data(faces)
+        Cube.validate_file_data(faces)
         return cls(
             (
-                Face(Cube.__convert_key_matrix(faces["red"])),
-                Face(Cube.__convert_key_matrix(faces["orange"])),
-                Face(Cube.__convert_key_matrix(faces["green"])),
-                Face(Cube.__convert_key_matrix(faces["blue"])),
-                Face(Cube.__convert_key_matrix(faces["white"])),
-                Face(Cube.__convert_key_matrix(faces["yellow"])),
+                Face(Cube._convert_key_matrix(faces["red"])),
+                Face(Cube._convert_key_matrix(faces["orange"])),
+                Face(Cube._convert_key_matrix(faces["green"])),
+                Face(Cube._convert_key_matrix(faces["blue"])),
+                Face(Cube._convert_key_matrix(faces["white"])),
+                Face(Cube._convert_key_matrix(faces["yellow"])),
             )
         )
 
     @staticmethod
-    def __convert_clockwise_key(clockwise_key):
+    def _convert_clockwise_key(clockwise_key):
         return clockwise_key == "y"
 
     @staticmethod
@@ -77,21 +77,21 @@ class Cube:
         os.system("cls" if os.name == "nt" else "clear")
 
     @staticmethod
-    def __orient_edge(edge, condition):
+    def _orient_edge(edge, condition):
         return edge[::-1] if condition else edge
 
     @staticmethod
-    def __validate_file_extension(file_path):
+    def validate_file_extension(file_path):
         if file_path.suffix != ".json":
             raise ValueError("Only .json format is permitted!")
 
     @staticmethod
-    def __validate_file_exists(file_path):
+    def validate_file_exists(file_path):
         if not file_path.is_file():
             raise FileNotFoundError(f"File not found: {file_path}")
 
     @staticmethod
-    def __convert_key_matrix(key_matrix):
+    def _convert_key_matrix(key_matrix):
         color_map = {
             "r": FaceColors.RED,
             "o": FaceColors.ORANGE,
@@ -103,7 +103,7 @@ class Cube:
         return [[color_map[cell] for cell in row] for row in key_matrix]
     
     @staticmethod
-    def __validate_data_structure(faces):
+    def validate_data_structure(faces):
         if len(faces) != 6:
             raise ValueError("Cube must contain 6 faces!")
         for matrix in faces.values():
@@ -114,7 +114,7 @@ class Cube:
                     raise ValueError("Incorrect column amount!")
     
     @staticmethod
-    def __validate_center_colors(faces):
+    def validate_center_colors(faces):
         key_color_map = {
             'red': 'r',
             'orange': 'o',
@@ -128,7 +128,7 @@ class Cube:
                 raise ValueError("Center color must match the face color!")
             
     @staticmethod
-    def __validate_allowed_colors(faces):
+    def validate_allowed_colors(faces):
         for matrix in faces.values():
             for row in matrix:
                 for cell in row:
@@ -196,15 +196,28 @@ class Cube:
 
     def display_all_faces(self):
         row_len = col_len = Face.edge_len
+        for row in self.__white_face.get_face_matrix():
+            print(' ' * 15, end="")
+            for cell in row:
+                cell.draw_square()
+            print('\n')
 
+        lateral_space = (self.__orange_face, self.__green_face, self.__red_face, self.__blue_face)
         for i in range(row_len):
-            for face in self.__faces.values():
+            for face in lateral_space:
                 for j in range(col_len):
                     face_matrix = face.get_face_matrix()
                     face_matrix[i][j].draw_square()
 
                 print("   ", end="")
             print("\n")
+            
+        for row in self.__yellow_face.get_face_matrix()[::-1]:
+            print(' '*15, end="")
+            for cell in row[::-1]:
+                cell.draw_square()
+            print('\n')
+                    
 
     def __rotate_edge_surface(self, edge_surface, rotated_face, clockwise):
         # * rotation of orange, blue, yellow faces is inverted
@@ -269,10 +282,10 @@ class Cube:
         is_red = rotated_face == self.__red_face
         orient_condition = is_red == clockwise
 
-        final_edge_for_green = Cube.__orient_edge(edge_for_green, orient_condition)
-        final_edge_for_blue = Cube.__orient_edge(edge_for_blue, orient_condition)
-        final_edge_for_white = Cube.__orient_edge(edge_for_white, not orient_condition)
-        final_edge_for_yellow = Cube.__orient_edge(
+        final_edge_for_green = Cube._orient_edge(edge_for_green, orient_condition)
+        final_edge_for_blue = Cube._orient_edge(edge_for_blue, orient_condition)
+        final_edge_for_white = Cube._orient_edge(edge_for_white, not orient_condition)
+        final_edge_for_yellow = Cube._orient_edge(
             edge_for_yellow, not orient_condition
         )
 
@@ -287,10 +300,10 @@ class Cube:
         is_green = rotated_face == self.__green_face
         orient_condition = is_green == clockwise
 
-        final_edge_for_orange = Cube.__orient_edge(edge_for_orange, orient_condition)
-        final_edge_for_red = Cube.__orient_edge(edge_for_red, orient_condition)
-        final_edge_for_white = Cube.__orient_edge(edge_for_white, not orient_condition)
-        final_edge_for_yellow = Cube.__orient_edge(
+        final_edge_for_orange = Cube._orient_edge(edge_for_orange, orient_condition)
+        final_edge_for_red = Cube._orient_edge(edge_for_red, orient_condition)
+        final_edge_for_white = Cube._orient_edge(edge_for_white, not orient_condition)
+        final_edge_for_yellow = Cube._orient_edge(
             edge_for_yellow, not orient_condition
         )
 
@@ -322,16 +335,19 @@ class Cube:
             edge_surface, rotated_face, clockwise
         )
         self.__set_edge_surface(rotated_edge_surface, rotated_face, clockwise)
-
-    def rotate_face(self, keys):
+        
+    def __convert_keys(self, keys):
         formatted_keys = tuple(key.strip() for key in keys)
         Cube.check_keys(formatted_keys)
         main_face_key, rotated_face_key, clockwise_key = formatted_keys
 
         main_face = self.__faces[main_face_key]
         rotated_face = main_face.get_neighbor_by_key(rotated_face_key)
-        clockwise = Cube.__convert_clockwise_key(clockwise_key)
+        clockwise = Cube._convert_clockwise_key(clockwise_key)
+        return rotated_face, clockwise
 
+    def rotate_face(self, keys):
+        rotated_face, clockwise = self.__convert_keys(keys)
         rotated_face.rotate(clockwise)
         self.__rotate_neighbors(rotated_face, clockwise)
 
