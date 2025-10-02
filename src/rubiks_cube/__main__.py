@@ -1,12 +1,13 @@
 from .cube import Cube
 from .colors import FaceColors
+from .utils import clear_terminal
 
 
 def main():
-    #cube1 = Cube.create_solved()
-    #cube1.shuffle()
-    cube1 = Cube.create_from_file("input.json")
-    Cube.clear_terminal()
+    cube1 = Cube.create_solved()
+    cube1.shuffle(2)
+    # cube1 = Cube.create_from_file("input.json")
+    clear_terminal()
     while True:
         cube1.display_all_faces()
         print(
@@ -18,8 +19,7 @@ def main():
         print("You wanna rotate clockwise? y - yes, n - no")
         clockwise_key = input("Enter option: ")
         keys = (main_face_key, rotated_face_key, clockwise_key)
-        #Cube.clear_terminal()
-        
+        print('\n')
         try:
             cube1.rotate_face(keys)
         except ValueError as error:
