@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Rubiks’s Cube Simulator Documentation &#8212; Rubiks&#39;s Cube 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Features" href="features.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="rubiks-s-cube-simulator-documentation">
+<h1>Rubiks’s Cube Simulator Documentation<a class="headerlink" href="#rubiks-s-cube-simulator-documentation" title="Link to this heading">¶</a></h1>
+<p><strong>Rubik’s Cube Simulator</strong> is a Python application for simulating and manipulating a standard 3x3 Rubik’s Cube.
+This project provides a complete object-oriented implementation with support for face rotations, cube shuffling,
+state validation, and visual console display.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#quick-start-example">Quick Start Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#loading-from-file">Loading from File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#rotating-faces">Rotating Faces</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="key_commands.html">Key Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_format.html">File Format</a></li>
+</ul>
+</div>
+<dl class="py class" id="module-rubiks_cube">
+<dt class="sig sig-object py" id="rubiks_cube.Cube">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">Cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Face</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube" title="Link to this definition">¶</a></dt>
+<dd><p>Represents a standard 3x3 Rubik’s Cube composed of six faces.</p>
+<p>Each face is represented by a Face object with an associated center color.
+Cube methods allow rotating faces, shuffling, checking solved state, and
+displaying the cube in the console.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Cube.display_all_faces">
+<span class="sig-name descname"><span class="pre">display_all_faces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.display_all_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.display_all_faces" title="Link to this definition">¶</a></dt>
+<dd><p>Print an unfolded representation of the cube to the console.</p>
+<ul class="simple">
+<li><p>White face on top</p></li>
+<li><p>Four side faces in the middle row (O, G, R, B)</p></li>
+<li><p>Yellow face on bottom</p></li>
+</ul>
+<p>Each cell is drawn via its draw_square() method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Cube.get_face_by_key">
+<span class="sig-name descname"><span class="pre">get_face_by_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Face</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.get_face_by_key"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.get_face_by_key" title="Link to this definition">¶</a></dt>
+<dd><p>Retrieve a Face object by its single-character key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>key</strong> – One of ‘r’, ‘o’, ‘g’, ‘b’, ‘w’, ‘y’.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The corresponding Face instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Cube.is_solved">
+<span class="sig-name descname"><span class="pre">is_solved</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.is_solved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.is_solved" title="Link to this definition">¶</a></dt>
+<dd><p>Check if the cube is in a solved state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if all six faces are uniform in color, False otherwise.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Cube.rotate_face">
+<span class="sig-name descname"><span class="pre">rotate_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotated_face</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clockwise</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.rotate_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.rotate_face" title="Link to this definition">¶</a></dt>
+<dd><p>Rotate a single face and update its neighbors accordingly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rotated_face</strong> – The Face to rotate.</p></li>
+<li><p><strong>clockwise</strong> – True for clockwise, False for counter-clockwise.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Cube.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">35</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.shuffle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.shuffle" title="Link to this definition">¶</a></dt>
+<dd><p>Perform a random sequence of face rotations to shuffle the cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>target_count</strong> – Desired number of random moves (default 35).</p></li>
+<li><p><strong>max_count</strong> – Hard limit on moves to avoid infinite loops (default 100).</p></li>
+</ul>
+</dd>
+</dl>
+<p>The method avoids immediate inverse moves on the same face.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rubiks_cube.CubeController">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">CubeController</span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController" title="Link to this definition">¶</a></dt>
+<dd><p>Manages creation and manipulation of Cube objects through high-level operations.</p>
+<p>This includes generating a solved cube, loading cube state from JSON files,
+and parsing user key commands into cube face rotations.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.CubeController.convert_keys">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.convert_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.convert_keys" title="Link to this definition">¶</a></dt>
+<dd><p>Parse a triple of user keys into a face rotation command.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cube_obj</strong> – Cube on which to perform the rotation.</p></li>
+<li><p><strong>keys</strong> – Tuple of three strings: (observed_face, neighbor_face, clockwise_flag).
+Face keys: ‘r’,’o’,’g’,’b’,’w’,’y’. Clockwise flag: ‘y’ for clockwise.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>The Face object to rotate.</p></li>
+<li><p>A boolean indicating rotation direction (True=clockwise).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A tuple containing</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValidatorError</strong> – If keys are invalid or not recognized.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.CubeController.create_cube_from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_cube_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.create_cube_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.create_cube_from_file" title="Link to this definition">¶</a></dt>
+<dd><p>Load cube face colors from a JSON file and construct a Cube.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file_name</strong> – Name of the JSON file containing cube face data.</p></li>
+<li><p><strong>file_dir</strong> – Directory path where file is located. Defaults to data_dir.</p></li>
+</ul>
+</dd>
+</dl>
+<p>The JSON file must have a top-level “faces” object mapping face keys to
+3x3 lists of color keys (“r”,”o”,”g”,”b”,”w”,”y”).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A Cube instance with faces colored according to the file.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValidatorError</strong> – If the file path or data format is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.CubeController.create_solved_cube">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_solved_cube</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.create_solved_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.create_solved_cube" title="Link to this definition">¶</a></dt>
+<dd><p>Create a new solved Cube instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>red, orange, green, blue, white, yellow.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>A Cube with each face initialized to its uniform center color</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rubiks_cube.FaceColors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">FaceColors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names=&lt;not</span> <span class="pre">given&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">module=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qualname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start=1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundary=None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rubiks_cube/colors.html#FaceColors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.FaceColors" title="Link to this definition">¶</a></dt>
+<dd><p>Enumeration of standard Rubik’s Cube face colors with ANSI 256-color codes.</p>
+<dl class="simple">
+<dt>Members:</dt><dd><p>RED: ANSI code “196” for red background.
+ORANGE: ANSI code “208” for orange background.
+GREEN: ANSI code “46” for green background.
+BLUE: ANSI code “21” for blue background.
+YELLOW: ANSI code “226” for yellow background.
+WHITE: ANSI code “15” for white background.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.FaceColors.draw_square">
+<span class="sig-name descname"><span class="pre">draw_square</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/colors.html#FaceColors.draw_square"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.FaceColors.draw_square" title="Link to this definition">¶</a></dt>
+<dd><p>Render a single colored square in the terminal using ANSI escape codes.</p>
+<p>This prints a space character with the background color set to the enum’s
+ANSI code and resets formatting afterward.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Rubiks's Cube</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="features.html">Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="key_commands.html">Key Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_format.html">File Format</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="features.html" title="next chapter">Features</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2025, Artem Shumilov.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

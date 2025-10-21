@@ -3,6 +3,7 @@ from .cube_controller import CubeController
 
 
 def main():
+    #my_cube = CubeController.create_solved_cube()
     my_cube = CubeController.create_cube_from_file("input.json")
     my_cube.shuffle(2)
     clear_terminal()
