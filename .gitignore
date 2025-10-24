@@ -14,3 +14,9 @@ Makefile
 */build/py-modindex.html
 */build/search.html
 */build/searchindex.js
+*/.bak
+*/features.html
+*/file_format.html
+*/installation.html
+*/key_commands.html
+*/quickstart.html
