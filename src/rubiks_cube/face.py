@@ -43,7 +43,7 @@ class Face:
         self._up_face = up_face
         self._down_face = down_face
 
-    def rotate(self, clockwise: bool) -> None:
+    def rotate(self, clockwise: bool = True) -> None:
         """
         Rotate the face 90 degrees in-place.
 
@@ -86,7 +86,7 @@ class Face:
             case "d":
                 return self._down_face
             case _:
-                raise ValueError(f"Invalid neighbor key: {key}")
+                raise KeyError(f"Invalid neighbor key: {key}")
 
     def get_col(self, index: int) -> list[FaceColors]:
         """

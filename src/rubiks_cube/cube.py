@@ -43,6 +43,7 @@ class Cube:
         self._blue_face = blue_face
         self._white_face = white_face
         self._yellow_face = yellow_face
+        
         self._faces_dict = self._create_face_dict()
         self._setup_face_connections()
 
@@ -76,19 +77,20 @@ class Cube:
 
         The method avoids immediate inverse moves on the same face.
         """
-        actual_count = 0
+        good_move_count = 0
+        attempts = 0
         face_keys = list(self._faces_dict.keys())
         last_move: tuple[str, bool] = ()
 
-        while actual_count < target_count and actual_count < max_count:
-            actual_count += 1
+        while good_move_count < target_count and attempts < max_count:
+            attempts += 1
             key = random.choice(face_keys)
             clockwise = random.choice((True, False))
             if last_move and (key == last_move[0] and clockwise != last_move[1]):
                 continue
-            self._faces_dict[key].rotate(clockwise)
-            self._rotate_neighbors(self._faces_dict[key], clockwise)
+            self.rotate_face(self._faces_dict[key], clockwise)
             last_move = (key, clockwise)
+            good_move_count += 1
 
     def _setup_face_connections(self) -> None:
         """
@@ -392,7 +394,7 @@ class Cube:
                 return False
         return True
 
-    def get_face_by_key(self, key: str) -> Face:
+    def _get_face_by_key(self, key: str) -> Face:
         """
         Retrieve a Face object by its single-character key.
 
@@ -403,3 +405,4 @@ class Cube:
             The corresponding Face instance.
         """
         return self._faces_dict[key]
+    

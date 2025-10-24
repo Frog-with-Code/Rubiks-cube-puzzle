@@ -116,7 +116,7 @@ class CubeController:
         Validator.validate_keys(formatted_keys)
 
         observed_face_key, rotated_face_key, clockwise_key = formatted_keys
-        observed_face = cube_obj.get_face_by_key(observed_face_key)
+        observed_face = cube_obj._get_face_by_key(observed_face_key)
         rotated_face = observed_face.get_neighbor_by_key(rotated_face_key)
         clockwise = clockwise_key == "y"
 
