@@ -1,0 +1,18 @@
+[project]
+name = "rubiks_cube"
+version = "1.0.0"
+authors = [{name = "Artem Shumilov", email = "frogwithcode@gmail.com"}]
+description = "Implementation of classic Rubik's cube puzzle"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["src"]
+omit = [
+    "*/__main__.py",
+    "*/__init__.py",
+    "*/src/rubiks_cube/utils.py",
+    "*/src/rubiks_cube/colors.py"
+]
