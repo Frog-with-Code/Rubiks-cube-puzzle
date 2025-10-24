@@ -4,13 +4,5 @@ __pycache__/
 .coverage
 make.bat
 Makefile
-*/build/_modules
-*/build/_sources
-*/build/_static
-*/build/.doctrees/
-*/build/.buildinfo
-*/build/genindex.html
-*/build/objects.inv
-*/build/py-modindex.html
-*/build/search.html
-*/build/searchindex.js
+*/.bak
+build/
