@@ -1,28 +1,33 @@
-from rubiks_cube import Cube
-from rubiks_cube import CubeController
+from rubiks_cube import CubeFactory
 import pytest
 
 
 class TestCube:
-
+    @pytest.fixture
+    def setup_factory(self):
+        return CubeFactory()
+    
     @pytest.mark.parametrize(
         "key, face_name",
         [("r", "_red_face"), ("b", "_blue_face"), ("w", "_white_face")],
     )
-    def test_get_original_face_by_key(self, key, face_name):
-        cube = CubeController.create_solved_cube()
+    def test_get_original_face_by_key(self, key, face_name, setup_factory):
+        factory = setup_factory
+        cube = factory.create_solved_cube()
         face = getattr(cube, face_name)
         face_by_key = cube._get_face_by_key(key)
 
         assert face is face_by_key
 
-    def test_solved_cube(self):
-        cube = CubeController.create_solved_cube()
+    def test_solved_cube(self, setup_factory):
+        factory = setup_factory
+        cube = factory.create_solved_cube()
         assert cube.is_solved() is True
 
-    def test_unsolved_cube(self):
-        cube = CubeController.create_solved_cube()
-        cube.shuffle(1)
+    def test_unsolved_cube(self, setup_factory):
+        factory = setup_factory
+        cube = factory.create_solved_cube()
+        cube.shuffle(1, 100)
         assert cube.is_solved() is False
 
     @pytest.mark.parametrize(
@@ -78,8 +83,9 @@ class TestCube:
             ),
         ],
     )
-    def test_face_rotation(self, face_key, clockwise, expected_faces):
-        cube = CubeController.create_solved_cube()
+    def test_face_rotation(self, face_key, clockwise, expected_faces, setup_factory):
+        factory = setup_factory
+        cube = factory.create_solved_cube()
 
         red_face = cube._get_face_by_key("r")
         orange_face = cube._get_face_by_key("o")
@@ -98,17 +104,18 @@ class TestCube:
 
         rotated_face = cube._get_face_by_key(face_key)
         cube.rotate_face(rotated_face, clockwise)
-        converted_matrixes = CubeController._convert_key_matrix(
+        converted_matrixes = setup_factory._convert_key_matrix(
             list(expected_faces.values())
         )
 
         for actual_matrix, expected_face in zip(converted_matrixes, faces):
             assert actual_matrix == expected_face.get_face_matrix()
 
-    def test_cube_shuffle(self):
-        solved_cube = CubeController.create_solved_cube()
-        cube = CubeController.create_solved_cube()
-        cube.shuffle()
+    def test_cube_shuffle(self, setup_factory):
+        factory = setup_factory
+        solved_cube = factory.create_solved_cube()
+        cube = factory.create_solved_cube()
+        cube.shuffle(35, 100)
         assert (
             all(
                 face.get_face_matrix() == solved_face.get_face_matrix()

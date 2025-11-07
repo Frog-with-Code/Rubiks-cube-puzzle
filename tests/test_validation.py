@@ -2,7 +2,6 @@ import pytest
 from pathlib import Path
 from rubiks_cube import Validator
 
-
 class TestInputValidation:
     @pytest.mark.parametrize(
         "valid_keys",

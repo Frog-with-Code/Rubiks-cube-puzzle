@@ -58,18 +58,6 @@ state validation, and visual console display.</p>
 Cube methods allow rotating faces, shuffling, checking solved state, and
 displaying the cube in the console.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="rubiks_cube.Cube.display_all_faces">
-<span class="sig-name descname"><span class="pre">display_all_faces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.display_all_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.display_all_faces" title="Link to this definition">¶</a></dt>
-<dd><p>Print an unfolded representation of the cube to the console.</p>
-<ul class="simple">
-<li><p>White face on top</p></li>
-<li><p>Four side faces in the middle row (O, G, R, B)</p></li>
-<li><p>Yellow face on bottom</p></li>
-</ul>
-<p>Each cell is drawn via its draw_square() method.</p>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="rubiks_cube.Cube.is_solved">
 <span class="sig-name descname"><span class="pre">is_solved</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube.html#Cube.is_solved"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Cube.is_solved" title="Link to this definition">¶</a></dt>
 <dd><p>Check if the cube is in a solved state.</p>
@@ -113,72 +101,21 @@ displaying the cube in the console.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="rubiks_cube.CubeController">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">CubeController</span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController" title="Link to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">CubeController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController" title="Link to this definition">¶</a></dt>
 <dd><p>Manages creation and manipulation of Cube objects through high-level operations.</p>
 <p>This includes generating a solved cube, loading cube state from JSON files,
 and parsing user key commands into cube face rotations.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="rubiks_cube.CubeController.convert_keys">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">convert_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cube_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Face</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.convert_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.convert_keys" title="Link to this definition">¶</a></dt>
-<dd><p>Parse a triple of user keys into a face rotation command.</p>
+<dt class="sig sig-object py" id="rubiks_cube.CubeController.rotate_cube_face">
+<span class="sig-name descname"><span class="pre">rotate_cube_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.rotate_cube_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.rotate_cube_face" title="Link to this definition">¶</a></dt>
+<dd><p>Rotate a face of the Rubik’s cube.</p>
+<p>Converts user input (key combination) into a rotation command for a specific
+face and delegates the operation to the Cube object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>cube_obj</strong> – Cube on which to perform the rotation.</p></li>
-<li><p><strong>keys</strong> – Tuple of three strings: (observed_face, neighbor_face, clockwise_flag).
-Face keys: ‘r’,’o’,’g’,’b’,’w’,’y’. Clockwise flag: ‘y’ for clockwise.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><ul class="simple">
-<li><p>The Face object to rotate.</p></li>
-<li><p>A boolean indicating rotation direction (True=clockwise).</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A tuple containing</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValidatorError</strong> – If keys are invalid or not recognized.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="rubiks_cube.CubeController.create_cube_from_file">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_cube_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.create_cube_from_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.create_cube_from_file" title="Link to this definition">¶</a></dt>
-<dd><p>Load cube face colors from a JSON file and construct a Cube.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>file_name</strong> – Name of the JSON file containing cube face data.</p></li>
-<li><p><strong>file_dir</strong> – Directory path where file is located. Defaults to data_dir.</p></li>
-</ul>
-</dd>
-</dl>
-<p>The JSON file must have a top-level “faces” object mapping face keys to
-3x3 lists of color keys (“r”,”o”,”g”,”b”,”w”,”y”).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A Cube instance with faces colored according to the file.</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>ValidatorError</strong> – If the file path or data format is invalid.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="rubiks_cube.CubeController.create_solved_cube">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_solved_cube</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rubiks_cube.Cube" title="rubiks_cube.cube.Cube"><span class="pre">Cube</span></a></span></span><a class="reference internal" href="_modules/rubiks_cube/cube_controller.html#CubeController.create_solved_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.CubeController.create_solved_cube" title="Link to this definition">¶</a></dt>
-<dd><p>Create a new solved Cube instance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>red, orange, green, blue, white, yellow.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>A Cube with each face initialized to its uniform center color</p>
+<dd class="field-odd"><p><strong>keys</strong> (<em>tuple</em><em>[</em><em>str</em><em>, </em><em>str</em><em>, </em><em>str</em><em>]</em>) – A tuple of three keys that determines
+which face to rotate and the rotation direction (clockwise or
+counterclockwise).</p>
 </dd>
 </dl>
 </dd></dl>
@@ -202,6 +139,64 @@ WHITE: ANSI code “15” for white background.</p>
 <dt class="sig sig-object py" id="rubiks_cube.FaceColors.draw_square">
 <span class="sig-name descname"><span class="pre">draw_square</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rubiks_cube/colors.html#FaceColors.draw_square"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.FaceColors.draw_square" title="Link to this definition">¶</a></dt>
 <dd><p>Render a single colored square in the terminal using ANSI escape codes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rubiks_cube.Validator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rubiks_cube.</span></span><span class="sig-name descname"><span class="pre">Validator</span></span><a class="reference internal" href="_modules/rubiks_cube/validator.html#Validator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Validator" title="Link to this definition">¶</a></dt>
+<dd><p>Validates user inputs and cube configuration data for the Rubik’s Cube application.</p>
+<p>This includes validating rotation key commands, JSON file paths and contents,
+and ensuring the cube’s face data structure and colors are correct.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Validator.validate_file_data">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_file_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">faces</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/validator.html#Validator.validate_file_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Validator.validate_file_data" title="Link to this definition">¶</a></dt>
+<dd><p>Validate the structure and content of cube face data loaded from JSON.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>faces</strong> – Dictionary mapping face names (‘red’,’orange’,…) to 3x3 matrices of color keys.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Calls:</dt><dd><p>_validate_data_structure: Ensures six faces, correct matrix dimensions.
+_validate_center_colors: Checks each face’s center matches its key.
+_validate_allowed_colors: Ensures all keys are valid color keys.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Validator.validate_file_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_file_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/validator.html#Validator.validate_file_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Validator.validate_file_path" title="Link to this definition">¶</a></dt>
+<dd><p>Validate a file path for loading JSON cube data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>file_path</strong> – Path object to the JSON file.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Calls:</dt><dd><p>_validate_file_exists: Ensures the file exists.
+_validate_file_extension: Ensures the file has a .json extension.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rubiks_cube.Validator.validate_keys">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">validate_keys</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rubiks_cube/validator.html#Validator.validate_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rubiks_cube.Validator.validate_keys" title="Link to this definition">¶</a></dt>
+<dd><p>Validate a rotation command composed of three keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> – Tuple of (observed_face_key, rotated_face_key, clockwise_key).
+- observed_face_key: Color key of the face being observed (‘r’,’o’,’g’,’b’,’w’,’y’).
+- rotated_face_key: Rotation direction key relative to observed face (‘l’,’u’,’r’,’d’).
+- clockwise_key: ‘y’ for clockwise, ‘n’ for counter-clockwise.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If any key is not in the allowed set.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

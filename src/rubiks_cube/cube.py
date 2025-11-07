@@ -43,7 +43,7 @@ class Cube:
         self._blue_face = blue_face
         self._white_face = white_face
         self._yellow_face = yellow_face
-        
+
         self._faces_dict = self._create_face_dict()
         self._setup_face_connections()
 
@@ -99,62 +99,30 @@ class Cube:
         Each face's set_dependency() is called with the four adjacent faces
         in order: left, right, top, bottom.
         """
-        self._red_face.set_dependency(self._green_face, self._blue_face,
-                                      self._white_face, self._yellow_face)
-        self._orange_face.set_dependency(self._blue_face, self._green_face,
-                                         self._white_face, self._yellow_face)
-        self._green_face.set_dependency(self._orange_face, self._red_face,
-                                        self._white_face, self._yellow_face)
-        self._blue_face.set_dependency(self._red_face, self._orange_face,
-                                       self._white_face, self._yellow_face)
-        self._white_face.set_dependency(self._orange_face, self._red_face,
-                                        self._blue_face, self._green_face)
-        self._yellow_face.set_dependency(self._red_face, self._orange_face,
-                                         self._blue_face, self._green_face)
-
-    def display_all_faces(self) -> None:
-        """
-        Print an unfolded representation of the cube to the console.
-
-        - White face on top
-        - Four side faces in the middle row (O, G, R, B)
-        - Yellow face on bottom
-
-        Each cell is drawn via its draw_square() method.
-        """
-        row_len = col_len = Face.edge_len
-
-        # Top (white)
-        for row in self._white_face.get_face_matrix():
-            print(" " * 15, end="")
-            for cell in row:
-                cell.draw_square()
-            print("\n")
-
-        # Middle (orange, green, red, blue)
-        lateral_faces = (
-            self._orange_face,
-            self._green_face,
-            self._red_face,
-            self._blue_face,
+        self._red_face.set_dependency(
+            self._green_face, self._blue_face, self._white_face, self._yellow_face
         )
-        for i in range(row_len):
-            for face in lateral_faces:
-                for j in range(col_len):
-                    face.get_face_matrix()[i][j].draw_square()
-                print("   ", end="")
-            print("\n")
-
-        # Bottom (yellow)
-        for row in self._yellow_face.get_face_matrix()[::-1]:
-            print(" " * 15, end="")
-            for cell in row[::-1]:
-                cell.draw_square()
-            print("\n")
+        self._orange_face.set_dependency(
+            self._blue_face, self._green_face, self._white_face, self._yellow_face
+        )
+        self._green_face.set_dependency(
+            self._orange_face, self._red_face, self._white_face, self._yellow_face
+        )
+        self._blue_face.set_dependency(
+            self._red_face, self._orange_face, self._white_face, self._yellow_face
+        )
+        self._white_face.set_dependency(
+            self._orange_face, self._red_face, self._blue_face, self._green_face
+        )
+        self._yellow_face.set_dependency(
+            self._red_face, self._orange_face, self._blue_face, self._green_face
+        )
 
     def _rotate_edge_surface(
         self,
-        edge_surface: tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]],
+        edge_surface: tuple[
+            list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]
+        ],
         rotated_face: Face,
         clockwise: bool,
     ) -> tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]]:
@@ -172,11 +140,11 @@ class Cube:
         Returns:
             A tuple of four edge lists, rotated by one position.
         """
-        equator_clockwise = (not clockwise
-                             if rotated_face in (self._orange_face,
-                                                 self._blue_face,
-                                                 self._yellow_face)
-                             else clockwise)
+        equator_clockwise = (
+            not clockwise
+            if rotated_face in (self._orange_face, self._blue_face, self._yellow_face)
+            else clockwise
+        )
         if equator_clockwise:
             return edge_surface[-1:] + edge_surface[:-1]
         return edge_surface[1:] + edge_surface[:1]
@@ -241,7 +209,9 @@ class Cube:
             self._red_face.get_row(i),
         )
 
-    def _get_edge_surface(self, rotated_face: Face) -> tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]]:
+    def _get_edge_surface(
+        self, rotated_face: Face
+    ) -> tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]]:
         """
         Dispatch to the appropriate equator getter based on rotated face.
 
@@ -259,7 +229,9 @@ class Cube:
 
     def _set_red_orange_equator(
         self,
-        edge_surface: tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]],
+        edge_surface: tuple[
+            list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]
+        ],
         rotated_face: Face,
         clockwise: bool,
     ) -> None:
@@ -289,7 +261,9 @@ class Cube:
 
     def _set_green_blue_equator(
         self,
-        edge_surface: tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]],
+        edge_surface: tuple[
+            list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]
+        ],
         rotated_face: Face,
         clockwise: bool,
     ) -> None:
@@ -319,7 +293,9 @@ class Cube:
 
     def _set_white_yellow_equator(
         self,
-        edge_surface: tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]],
+        edge_surface: tuple[
+            list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]
+        ],
         rotated_face: Face,
     ) -> None:
         """
@@ -340,7 +316,9 @@ class Cube:
 
     def _set_edge_surface(
         self,
-        edge_surface: tuple[list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]],
+        edge_surface: tuple[
+            list[FaceColors], list[FaceColors], list[FaceColors], list[FaceColors]
+        ],
         rotated_face: Face,
         clockwise: bool,
     ) -> None:
@@ -368,7 +346,9 @@ class Cube:
             clockwise: Direction of rotation.
         """
         edge_surface = self._get_edge_surface(rotated_face)
-        rotated_edge_surface = self._rotate_edge_surface(edge_surface, rotated_face, clockwise)
+        rotated_edge_surface = self._rotate_edge_surface(
+            edge_surface, rotated_face, clockwise
+        )
         self._set_edge_surface(rotated_edge_surface, rotated_face, clockwise)
 
     def rotate_face(self, rotated_face: Face, clockwise: bool) -> None:
@@ -405,4 +385,3 @@ class Cube:
             The corresponding Face instance.
         """
         return self._faces_dict[key]
-    

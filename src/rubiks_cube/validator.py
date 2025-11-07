@@ -1,6 +1,7 @@
 from .face import Face
 from pathlib import Path
 
+
 class Validator:
     """
     Validates user inputs and cube configuration data for the Rubik's Cube application.
@@ -13,8 +14,8 @@ class Validator:
     allowed_rotation_keys = ["l", "u", "r", "d"]
     allowed_clockwise_keys = ["y", "n"]
 
-    @classmethod
-    def validate_keys(cls, keys: tuple[str, str, str]) -> None:
+    @staticmethod
+    def validate_keys(keys: tuple[str, str, str]) -> None:
         """
         Validate a rotation command composed of three keys.
 
@@ -28,11 +29,11 @@ class Validator:
             ValueError: If any key is not in the allowed set.
         """
         observed_face_key, rotated_face_key, clockwise_key = keys
-        if observed_face_key not in cls.allowed_color_keys:
+        if observed_face_key not in Validator.allowed_color_keys:
             raise ValueError("Incorrect value of main face key!")
-        if rotated_face_key not in cls.allowed_rotation_keys:
+        if rotated_face_key not in Validator.allowed_rotation_keys:
             raise ValueError("Incorrect value of rotated face key!")
-        if clockwise_key not in cls.allowed_clockwise_keys:
+        if clockwise_key not in Validator.allowed_clockwise_keys:
             raise ValueError("Incorrect value of rotated face key!")
 
     @staticmethod
@@ -138,8 +139,8 @@ class Validator:
             if faces[face_color][1][1] != key:
                 raise ValueError("Center color must match the face color!")
 
-    @classmethod
-    def _validate_allowed_colors(cls, faces: dict[str, list[list[str]]]) -> None:
+    @staticmethod
+    def _validate_allowed_colors(faces: dict[str, list[list[str]]]) -> None:
         """
         Ensure all cells in all faces use allowed color keys.
 
@@ -150,7 +151,7 @@ class Validator:
             ValueError: If any color key is not recognized.
         """
         if not all(
-            cell in cls.allowed_color_keys
+            cell in Validator.allowed_color_keys
             for matrix in faces.values()
             for row in matrix
             for cell in row

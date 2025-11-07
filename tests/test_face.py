@@ -1,4 +1,4 @@
-from rubiks_cube import Face, FaceColors, CubeController
+from rubiks_cube import Face, FaceColors, CubeFactory
 import pytest
 
 
@@ -67,7 +67,7 @@ class TestFace:
         assert face.get_row(1) == [FaceColors.RED, FaceColors.RED, FaceColors.RED]
 
     def test_get_original_neighbor_by_valid_key(self):
-        cube = CubeController.create_solved_cube()
+        cube = CubeFactory().create_solved_cube()
         red_face = cube._get_face_by_key("r")
         green_face = cube._get_face_by_key("g")
         blue_face = cube._get_face_by_key("b")

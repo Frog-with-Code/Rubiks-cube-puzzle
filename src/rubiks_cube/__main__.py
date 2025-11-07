@@ -1,14 +1,17 @@
 from .utils import clear_terminal
 from .cube_controller import CubeController
-
+from .cube_factory import CubeFactory
+from .cube_view import CubeView
 
 def main():
-    #my_cube = CubeController.create_solved_cube()
-    my_cube = CubeController.create_cube_from_file("input.json")
-    my_cube.shuffle(2)
+    cube = CubeFactory().create_solved_cube()
+    #cube = CubeFactory().create_cube_from_file("input.json")
+    controller = CubeController(cube)
+    
+    cube.shuffle(1)
     clear_terminal()
     while True:
-        my_cube.display_all_faces()
+        CubeView.display_cube_state(cube)
         
         print(
             "Choose the main face. r - red, o - orange, g - green, b - blue, w - white, y - yellow"
@@ -21,15 +24,13 @@ def main():
         
         keys = (main_face_key, rotated_face_key, clockwise_key)
         try:
-            rotated_face, clockwise = CubeController.convert_keys(my_cube, keys)
+            controller.rotate_cube_face(keys)
         except ValueError as error:
             print(f"{error} \nTry again\n")
             continue
         print('\n')
         
-        my_cube.rotate_face(rotated_face, clockwise)
-        
-        if my_cube.is_solved():
+        if cube.is_solved():
             print("\nThe puzzle is solved!")
             break
 
